@@ -1,0 +1,12 @@
+npm-debug.log
+yarn-error.log
+config.local.js
+node_modules
+.DS_Store
+**/.DS_Store
+bin/*
+docs/output/*
+docs/build/doctrees/*
+docs/build/html/*
+docs/junk/*
+docs/Docs/doctrees/*

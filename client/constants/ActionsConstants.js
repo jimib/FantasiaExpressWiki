@@ -1,0 +1,13 @@
+export const ERROR_SHOW = 'ERROR_SHOW';
+export const ERROR_HIDE = 'ERROR_HIDE';
+
+export const USER_ADDED = 'USER_ADDED';
+export const USER_UPDATED = 'USER_UPDATED';
+export const USER_REMOVED = 'USER_REMOVED';
+export const USERS_LOAD_BEGIN = 'USERS_LOAD_BEGIN';
+export const USERS_LOAD_FAIL = 'USERS_LOAD_FAIL';
+export const USERS_LOAD_SUCCESS = 'USERS_LOAD_SUCCESS';
+
+export const SESSION_STARTED = 'SESSION_STARTED';
+export const SESSION_ENDED = 'SESSION_ENDED';
+export const SESSION_UPDATED = 'SESSION_UPDATED';

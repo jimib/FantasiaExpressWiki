@@ -1,0 +1,103 @@
+size( width, height )
+	width width
+	height height
+
+radius( r )
+	border-radius r
+
+.container
+	*
+		-webkit-touch-callout none
+		-webkit-user-select none
+		-khtml-user-select none
+		-moz-user-select none
+		-ms-user-select none
+		user-select none
+		cursor default
+
+	&.disabled
+		opacity 0.25
+
+	position relative
+	top 35px
+	left 0px
+
+	border-top 1px solid #00000033
+	border-left 1px solid #00000033
+	border-bottom 100px solid #00000000
+	border-right 100px solid #00000000
+
+	.controls
+		height 35px
+		position absolute
+		top -35px
+		width 800px
+
+		.control
+			float left
+
+			margin-right 20px
+
+			*
+				noselect()
+				float left
+
+	.content
+		position relative
+		top 0px
+		left 0px
+		size(100%,100%)
+		transform-origin 0px 0px
+
+	.overlay
+		background-repeat no-repeat
+		background-position top left
+		position absolute
+		top 0px
+		left 0px
+		z-index 100
+		pointer-events none
+	
+
+	.guides
+		background-repeat no-repeat
+		background-position top left
+		background-image url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAIAAAD/gAIDAAABG2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iWE1QIENvcmUgNS41LjAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIi8+CiA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgo8P3hwYWNrZXQgZW5kPSJyIj8+Gkqr6gAAAYJpQ0NQc1JHQiBJRUM2MTk2Ni0yLjEAACiRdZHPK0RRFMc/M0zkR6NYWFhMwsaPBjWxUWYSSprGKL82M8+bGTVvvN57kmyV7RQlNn4t+AvYKmuliJQsrKyJDdNz3jw1krm3c87nfu89p3vPBW88q2hmZRC0nGXERsOBmdm5QNUzPqqL1plQTH04Gp2g7Pi4w+PEm26nVvlz/47aRdVUwFMtPKTohiU8JjyxaukObws3KZnEovCpcJchFxS+dfSkyy8Op13+ctiIxyLgbRAOpH9x8hcrGUMTlpfTpmVXlJ/7OC+pU3PTUxJbxVowiTFKmADjjBAhRC+D4kN000ePrCiTHyzmT7IsuYp4nTUMlkiTwaJL1BWprkpMia7KzLLm9P9vX81Uf59bvS4MvifbfmuHqi0o5G3789C2C0dQ8QgXuVL+8gEMvIueL2lt++DfgLPLkpbcgfNNaH7QE0aiKFWIeVMpeD2B+llovIaaebdnP/sc30N8Xb7qCnb3oEPO+xe+AQZrZ7plSs3vAAAACXBIWXMAAAsTAAALEwEAmpwYAAABL0lEQVR4nO3bMYrDQBAAQcn5vlYf0Af0Zl9w0QU204GRD6rSSZbGA4PA+1prY+Zx9wP+lbXWWuv5wnmer0Yfnb550o2v8ssKxArECsQKxArECsQK9t8L/jiOu1/yx3Vd3/akbXOUlqk1DMQKxArECsQKxArECsQKXPCFC34+tYaBWIFYgViBWIFYgViBWIELvnDBz6fWMBArECsQKxArECsQKxArcMEXLvj51BoGYgViBWIFYgViBWIFYgW7f7IGLvj51BoGYgViBWIFYgViBWIFYgW+wRcu+PnUGgZiBWIFYgViBWIFYgViBS74wgU/n1rDQKxArECsQKxArECsQKzABV+44OdTaxiIFYgViBWIFYgViBWIFbjgCxf8fGoNA7ECsQKxArECsQKxArGCH8b5BcL8IPzIAAAAAElFTkSuQmCC')
+		background-position 0px 0px
+		background-repeat repeat
+		position absolute
+		top 0px
+		left 0px
+		z-index 101
+		pointer-events none
+		size(100%,100%)
+		opacity 0.25
+
+	.slider
+		radius(10px)
+		size(120px,20px)
+		background-color white
+		border 1px solid grey
+		position relative
+		margin-left 5px
+
+		.content
+			size(100px,4px)
+			position relative
+			left 10px
+			top 8px
+			background-color grey
+
+		.background
+			position absolute
+			width 100%
+			height 4px
+			background-color red
+
+		.button
+			size(16px,16px)
+			background-color grey
+			radius(10px)
+			transform translate(-8px,-6px)
+			position absolute
+

@@ -1,0 +1,15 @@
+{
+	"title" : "Pixel Inspiration Application: React v3",
+	"source" : {
+		"include" : [],
+		"exclude" : ["../node_modules", "../junk", "../scripts", "../stories", "../tests",  "../public", "../jsdocs", "../.storybook"],
+		"includePattern" : ".+\\.js(doc|x)?$",
+		"excludePattern" : "(^|\\/|\\\\)_"
+	},
+	"plugins" : [],
+	"opts" : {
+		"destination" : "./docs",
+		"encoding" : "utf8",
+		"recurse" : true
+	}
+}

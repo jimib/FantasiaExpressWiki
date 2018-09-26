@@ -1,0 +1,76 @@
+asset( path )
+	path = path + "?fallback=/" + path
+	url( path )
+
+noselect()
+	-webkit-touch-callout none
+	-webkit-user-select none
+	-khtml-user-select none
+	-moz-user-select none
+	-ms-user-select none
+	user-select none
+	cursor default
+
+ignorePadding()
+	-webkit-box-sizing border-box
+	-moz-box-sizing border-box
+	box-sizing border-box
+	
+absolute( left, top )
+	position absolute
+	top top
+	left left
+	
+relative( left, top )
+	position relative
+	top top
+	left left
+	
+size( width, height )
+	width width
+	height height
+
+fullscreen()
+	size unit( pageWidth, "px" ) unit( pageHeight, "px" )
+	
+circle( diameter )
+	size unit( diameter, 'px' ) unit( diameter, 'px' )
+	transform translate( unit( -0.5 * diameter, 'px' ), unit( -0.5 * diameter, 'px' ) )
+	radius unit( ( 0.5 * diameter ), "px" )
+
+radius( r )
+	border-radius r
+
+shadow( a, b, c, d, color )
+	-webkit-box-shadow a b c d color
+	-moz-box-shadow a b c d color
+	box-shadow a b c d color
+	
+guide(src)
+	&::after
+		content ''
+		display block
+		size(100%, 100%)
+		position absolute
+		top 0px
+		left 0px
+		background-image asset(src)
+		background-repeat no-repeat
+		user-select none
+		pointer-events none
+		{block}
+
+media-hd-landscape()
+	@media only screen and (min-device-width: 1920px) and (max-device-width: 1920px) and (min-device-height: 1080px) and (max-device-height: 1080px)
+		{block}
+
+media-ipad-landscape()
+	@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2)
+		{block}
+media-print()
+	@media print
+		{block}	
+		
+*::-webkit-scrollbar
+	display none
+	width 0px

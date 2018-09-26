@@ -1,0 +1,23 @@
+@import "../../index.styl"
+
+.container
+	ul.menu
+		list-style-type none
+		margin 0 0 20 0
+		padding 0
+
+		&::after
+			display block
+			content ""
+			clear both
+
+		li 
+			float left
+			margin 0 10 0 0
+
+			&.right
+				margin 0 0 0 10
+				float right
+
+			.link:hover
+				background-color #111

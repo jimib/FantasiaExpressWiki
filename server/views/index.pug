@@ -1,0 +1,22 @@
+mixin addScript( src )
+	script(src=src)
+
+mixin addStyle( src )
+	link(rel="stylesheet" href=src)
+
+html
+	head
+		<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+
+		block styles
+		
+	body
+		block body
+		
+		+addScript(`js/polyfill.js`)
+
+		- scripts = locals.scripts || [];
+		each script in scripts
+			+addScript( script )
+
+		block scripts
