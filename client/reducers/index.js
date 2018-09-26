@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 import error from './ErrorReducer';
 import session from './SessionReducer';
-import users from './UsersReducer';
+import stations from './StationsReducer';
 
 export default combineReducers({
   error,
   session,
-  users
+  stations
 });
 
 

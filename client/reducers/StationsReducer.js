@@ -3,12 +3,12 @@ import produce from 'immer';
 import util from 'util';
 
 import {
-	USER_ADDED,
-	USER_REMOVED,
-	USER_UPDATED,
-	USERS_LOAD_BEGIN,
-	USERS_LOAD_SUCCESS,
-	USERS_LOAD_FAIL
+	STATION_ADDED,
+	STATION_REMOVED,
+	STATION_UPDATED,
+	STATIONS_LOAD_BEGIN,
+	STATIONS_LOAD_SUCCESS,
+	STATIONS_LOAD_FAIL
 } from '../constants/ActionsConstants';
 
 import {
@@ -30,29 +30,29 @@ const reducer = (state = INITIAL_STATE, action) => {
 	}
 	return produce( state, state => {
 		switch (action.type) {
-			case USER_ADDED:
-				return AddItem( state.items, action.user );
+			case STATION_ADDED:
+				return AddItem( state.items, action.station );
 				break;
-			case USER_REMOVED:
-				return RemoveItem( state.items, action.user );
+			case STATION_REMOVED:
+				return RemoveItem( state.items, action.station );
 				break;
-			case USER_UPDATED:
-				return UpdateItem( state.items, action.user );
+			case STATION_UPDATED:
+				return UpdateItem( state.items, action.station );
 				break;
-			case USERS_LOAD_BEGIN:
+			case STATIONS_LOAD_BEGIN:
 				return Update( state, {
 					error : null,
 					loading : true
 				} );
 				break;
-			case USERS_LOAD_SUCCESS:
+			case STATIONS_LOAD_SUCCESS:
 				return Update( state, {
-					items : action.users,
+					items : action.stations,
 					error : null,
 					loading : false
 				} );
 				break;
-			case USERS_LOAD_FAIL:
+			case STATIONS_LOAD_FAIL:
 				return Update( state, {
 					items : [],
 					error : action.error,

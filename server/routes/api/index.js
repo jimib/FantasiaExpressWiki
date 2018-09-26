@@ -6,6 +6,10 @@ const bodyParser = require('body-parser');
 const _ = require('lodash');
 const uuid = require('uuid');
 
+const jsonServer = require('json-server')
+const router = jsonServer.router('.mockapi/db.json');
+const middlewares = jsonServer.defaults();
+
 const app = module.exports = express();
 
 const { getUsers } = require('../../controllers/users');
@@ -14,6 +18,8 @@ const { getUsers } = require('../../controllers/users');
 libs.api.extendApp( app );
 
 //parse incoming json
+app.use( middlewares );
+app.use( '/m', router );
 app.use( bodyParser.json() );
 app.set('views', path.join( __dirname, '..' , '..', 'views' ) );
 //sample end point

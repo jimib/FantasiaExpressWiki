@@ -11,16 +11,13 @@ import {
 } from '../actions/SessionAction';
 
 import {
-	loadUsers
-} from '../actions/UsersAction';
-
-import {
 	navigateTo
 } from '../actions/RouterAction';
 
 import App from '../components/App';
 import Login from '../components/Login';
 import { hideError } from '../actions/ErrorAction';
+import { loadStations } from '../actions/StationsAction';
 
 class AppContainer extends Component{
 
@@ -51,7 +48,7 @@ class AppContainer extends Component{
 				{/*ELSE DISPLAY APP*/}
 				{ (enableLogin && !user) ? 
 					<Login onLogin={onLogin} /> : 
-					<App {...{enableLogin,user,onLogout,onNavigateTo}} /> }
+					<App {...this.props} /> }
 			</div>
 		</Router>
 		);
@@ -83,6 +80,9 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
+	onMount : () => {
+		dispatch( loadStations() );
+	},
 	updateStatus : () => dispatch( getStatus() ),
 	onLogin : ( username, password ) => dispatch( login(username, password) ),
 	onLogout : () => dispatch( logout() ),

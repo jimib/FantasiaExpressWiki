@@ -5,5 +5,5 @@ export const URL_AUTH_LOGOUT = `${URL_AUTH}/logout`;
 
 
 export const URL_API = '/api';
-export const URL_API_USERS = `${URL_API}/users`;
-export const URL_API_USER = `${URL_API_USERS}/:id`;
+export const URL_API_STATIONS = `${URL_API}/m/stations`;
+export const URL_API_STATION = `${URL_API}/m/stations/:id`;

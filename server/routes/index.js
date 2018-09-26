@@ -20,4 +20,4 @@ app.get( '/', ( req, res, next ) => {
 //connect up subroutes
 const auth = require('./auth');
 app.use( auth );
-app.use( '/api', auth.verify(), require('./api') );
+app.use( '/api', require('./api') );

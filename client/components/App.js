@@ -10,17 +10,19 @@ import Styles from './css/App.styl';
 
 import {Button} from '@pixel-inspiration/react-skin';
 
-import UsersContainer from '../containers/UsersContainer';
-import Info from './Info';
-
 import {
 	PATH_ROOT,
-	PATH_USERS,
-	PATH_INFO
+	PATH_STATIONS,
+	PATH_EVENTS,
+	PATH_ROUTES
 } from '../constants/PathConstants';
-import { getEventTargetAttrs } from '../../node_modules/@pixel-inspiration/react-libs/common';
+import StationsContainer from '../containers/StationsContainer';
+
 
 class App extends Component {
+	componentDidMount(){
+		this.props.onMount();
+	}
 	/**
 	 * @memberOf App
 	 * @function render
@@ -32,16 +34,16 @@ class App extends Component {
 		return (
 			<div className={Styles.container}>
 				<ul className={Styles.menu}>
-					<li><Button data={PATH_USERS} onClick={onNavigateTo}>Users</Button></li>
-					<li><Button data={PATH_INFO} onClick={onNavigateTo}>Info</Button></li>
-					{util.isFunction(onLogout) && <li className={Styles.right}><Button onClick={onLogout}>Logout</Button></li>}
+					<li><Button data={PATH_STATIONS} onClick={onNavigateTo}>Stations</Button></li>
+					<li><Button data={PATH_EVENTS} onClick={onNavigateTo}>Events</Button></li>
+					<li><Button data={PATH_ROUTES} onClick={onNavigateTo}>Routes</Button></li>
 				</ul>
 				<Switch>
-					<Route path={PATH_USERS} component={UsersContainer} />
-					<Route path={PATH_INFO} render={() => (<Info>
-						This is some basic information I want to display without a container
-					</Info>)} />
-					<Route render={() => <Redirect to={PATH_USERS} /> } />
+					<Route path={PATH_STATIONS} component={StationsContainer} />
+					<Route path={PATH_EVENTS} render={() => {return <h1>Events</h1>}} />
+					<Route path={PATH_ROUTES} render={() => {return <h1>Routes</h1>}} />
+					
+					<Route render={() => <Redirect to={PATH_STATIONS} /> } />
 				</Switch>
 			</div>
 		);

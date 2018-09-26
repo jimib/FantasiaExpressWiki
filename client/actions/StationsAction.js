@@ -1,0 +1,84 @@
+
+import { push } from 'connected-react-router';
+
+import * as api from '../api';
+
+import {showError, catchError} from './ErrorAction';
+import {createRoutePath} from '../utils/PathUtil';
+
+import {
+	PATH_ROOT
+} from '../constants/PathConstants';
+
+import {
+	STATION_ADDED,
+	STATION_UPDATED,
+	STATION_REMOVED,
+	ERROR_SHOW,
+	STATIONS_LOAD_BEGIN,
+	STATIONS_LOAD_FAIL,
+	STATIONS_LOAD_SUCCESS
+} from '../constants/ActionsConstants';
+
+export const addStation = station => {
+	return ( dispatch, getState ) => {
+		return dispatch( stationAdded( station ) );
+	};
+}
+
+export const removeStation = station => {
+	return ( dispatch, getState ) => {
+		return dispatch( stationRemoved( station ) );
+	};
+}
+
+export const updateStation = station => {
+	return ( dispatch, getState ) => {
+		return dispatch( stationUpdated( station ) );
+	};
+}
+
+export const loadStations = () => {
+	return ( dispatch, getState ) => {
+		//notify that we're loading
+		dispatch( stationsLoadBegin() );
+		//make the request
+		api.getStations()
+		.then( stations => dispatch( stationsLoadSuccess( stations ) ) )
+		.catch( err => {
+			//handle the error
+			dispatch( stationsLoadFail( err ) );
+			dispatch( showError( err ) );
+		})
+	};
+}
+
+
+const stationAdded = station => ({
+	type : STATION_ADDED,
+	station
+});
+
+const stationUpdated = station => ({
+	type : STATION_UPDATED,
+	station
+});
+
+const stationRemoved = station => ({
+	type : STATION_REMOVED,
+	station
+});
+
+const stationsLoadBegin = () => ({
+	type : STATIONS_LOAD_BEGIN
+});
+
+const stationsLoadSuccess = stations => ({
+	type : STATIONS_LOAD_SUCCESS,
+	stations
+});
+
+const stationsLoadFail = error => ({
+	type : STATIONS_LOAD_FAIL,
+	error
+});

@@ -48,7 +48,7 @@ $( () => {
 	var $root = $('<div>').attr('data-app','app').appendTo( $('body') );
 	ReactDOM.render( 
 		<Provider store={store}>
-			<AppContainer enableLogin={true} />
+			<AppContainer enableLogin={false} />
 		</Provider>, 
 	$root.get(0) );
 } );
