@@ -9,6 +9,10 @@ import Styles from './css/Stations.styl';
 import {JourneyEditor} from '@meyouandus/wikiskin';
 import {Modal,Header,Button,Icon,Form} from 'semantic-ui-react';
 
+const DEFAULT_POSITION = {
+	lat: 51.531109166116295,
+	lng: -0.125550741249441
+}
 class Stations extends PixelComponent{
 	
 	/**
@@ -37,7 +41,7 @@ class Stations extends PixelComponent{
 	 * @returns {JSXElement}
 	 */
 	render(props){
-		var {className,items,itemSelected,onItemSelect,onItemUnselect,onItemUpdate,onItemRemove} = this.props;
+		var {className,items,itemSelected,onItemSelect,onItemUnselect,onItemUpdate,onItemRemove,onItemCreate} = this.props;
 		return (<div className={ClassNames(Styles.container,className)}>
 			<div className={Styles.content}>
 				<div className={Styles.list}>
@@ -50,7 +54,7 @@ class Stations extends PixelComponent{
 									onDelete={onItemRemove} />;
 					})}
 				</div>
-				<Button floated='right' icon='add' content='Station' />
+				<Button floated='right' icon='add' content='Station' onClick={onItemCreate} />
 			</div>
 
 			{itemSelected ? <EditItem data={itemSelected} onClose={onItemUnselect} onSave={onItemUpdate} /> : null}
@@ -131,7 +135,7 @@ class EditItem extends Component{
 		const hasChanges = _.size( _.keys(changes) ) > 0 ? true : false;
 
 		const getValue = (id) => getValueFromSources(id, changes, data);
-
+		
 		return <Modal
 		className={Styles.modal}
 		open={true}
@@ -143,8 +147,8 @@ class EditItem extends Component{
 			<Form.Input className={Styles.input} name={'name'} value={getValue('name')} onChange={this.onChange} />
 			<JourneyEditor
 				className={Styles.map}
-				center={data.position}
-				stations={[getValue('position')]} 
+				center={data.position||DEFAULT_POSITION}
+				stations={[getValue('position')||DEFAULT_POSITION]} 
 				onStationsChange={( stations ) => {
 					this.onChange( null, {name:'position',value:_.first( stations )} );
 				}} />

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import Stations from '../components/Stations';
-import { loadStations, selectStation, updateStation, unselectStation, removeStation } from '../actions/StationsAction';
+import { loadStations, selectStation, updateStation, unselectStation, removeStation, addStation } from '../actions/StationsAction';
 
 
 const mapStateToProps = state => {
@@ -26,6 +26,15 @@ const mapDispatchToProps = dispatch => ({
 	},
 	onItemRemove : ( station ) => {
 		dispatch( removeStation( station ) );
+	},
+	onItemCreate : () => {
+		dispatch( addStation( {
+			name:'New Station',
+			position: {
+				lat: 51.531109166116295,
+				lng: -0.125550741249441
+			}
+		} ) );
 	}
 });
 

@@ -15,7 +15,7 @@ export function getStations( station ){
 }
 
 export function addStation( station ){
-	return post( `${URL_API_STATION}`, station );
+	return post( `${URL_API_STATIONS}`, station );
 }
 
 export function updateStation( station ){

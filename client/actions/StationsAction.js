@@ -24,7 +24,7 @@ import {
 export const addStation = station => {
 	return ( dispatch, getState ) => {
 		return api.addStation( station )
-		.then(() => {
+		.then(( station ) => {
 			return dispatch( stationAdded( station ) );
 		});
 	};
