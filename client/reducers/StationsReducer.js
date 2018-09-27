@@ -6,6 +6,7 @@ import {
 	STATION_ADDED,
 	STATION_REMOVED,
 	STATION_UPDATED,
+	STATION_SELECTED,
 	STATIONS_LOAD_BEGIN,
 	STATIONS_LOAD_SUCCESS,
 	STATIONS_LOAD_FAIL
@@ -31,13 +32,20 @@ const reducer = (state = INITIAL_STATE, action) => {
 	return produce( state, state => {
 		switch (action.type) {
 			case STATION_ADDED:
-				return AddItem( state.items, action.station );
+				state.items = AddItem( state.items, action.station );
+				return state;
 				break;
 			case STATION_REMOVED:
-				return RemoveItem( state.items, action.station );
+				state.items = RemoveItem( state.items, action.station );
+				return state;
 				break;
 			case STATION_UPDATED:
-				return UpdateItem( state.items, action.station );
+				state.items = UpdateItem( state.items, action.station );
+				return state;
+				break;
+			case STATION_SELECTED:
+				state.itemSelected = action.station;
+				return state;
 				break;
 			case STATIONS_LOAD_BEGIN:
 				return Update( state, {

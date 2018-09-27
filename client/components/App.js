@@ -8,7 +8,7 @@ import { hot } from 'react-hot-loader';
 
 import Styles from './css/App.styl';
 
-import {Button} from '@pixel-inspiration/react-skin';
+import {Button} from 'semantic-ui-react';
 
 import {
 	PATH_ROOT,
@@ -29,15 +29,20 @@ class App extends Component {
 	 * @returns {JSXElement}
 	 */
 	render() {
-		let { users, onLogout, onNavigateTo } = this.props;
-		
+		const { onNavigateTo, location } = this.props;
+		const {pathname} = location || {};
+		console.log( pathname );
 		return (
 			<div className={Styles.container}>
-				<ul className={Styles.menu}>
-					<li><Button data={PATH_STATIONS} onClick={onNavigateTo}>Stations</Button></li>
-					<li><Button data={PATH_EVENTS} onClick={onNavigateTo}>Events</Button></li>
-					<li><Button data={PATH_ROUTES} onClick={onNavigateTo}>Routes</Button></li>
-				</ul>
+				<Button.Group>
+					{_.map([
+						{label:'Station',pathname:PATH_STATIONS},
+						{label:'Events',pathname:PATH_EVENTS},
+						{label:'Routes',pathname:PATH_ROUTES}
+					], (item, index) => {
+						return <Button key={index} primary={pathname == item.pathname} data={item.pathname} onClick={onNavigateTo}>{item.label}</Button>
+					})}
+				</Button.Group>
 				<Switch>
 					<Route path={PATH_STATIONS} component={StationsContainer} />
 					<Route path={PATH_EVENTS} render={() => {return <h1>Events</h1>}} />

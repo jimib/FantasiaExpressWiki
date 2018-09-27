@@ -14,6 +14,7 @@ import {
 	STATION_ADDED,
 	STATION_UPDATED,
 	STATION_REMOVED,
+	STATION_SELECTED,
 	ERROR_SHOW,
 	STATIONS_LOAD_BEGIN,
 	STATIONS_LOAD_FAIL,
@@ -53,6 +54,14 @@ export const loadStations = () => {
 	};
 }
 
+export const selectStation = ( station ) => {
+	return stationSelected( station );
+}
+
+export const unselectStation = () => {
+	return stationSelected( null );
+}
+
 
 const stationAdded = station => ({
 	type : STATION_ADDED,
@@ -66,6 +75,11 @@ const stationUpdated = station => ({
 
 const stationRemoved = station => ({
 	type : STATION_REMOVED,
+	station
+});
+
+const stationSelected = station => ({
+	type : STATION_SELECTED,
 	station
 });
 

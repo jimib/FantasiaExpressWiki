@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const _ = require('lodash');
 
 const app = module.exports = express();
 
@@ -13,7 +14,11 @@ app.set('views', path.join( __dirname, '..', 'views' ) );
 
 app.get( '/', ( req, res, next ) => {
 	res.render('index', {
-		scripts : ['bundles/app.bundle.js']
+		styles : ['//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css'],
+		scripts : ['bundles/app.bundle.js'],
+		variables: {
+			config : _.pick( _config, 'isDev' )
+		}
 	});
 });
 

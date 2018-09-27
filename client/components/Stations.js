@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import { PixelComponent } from '@pixel-inspiration/react-libs/components';
 import { ClassNames } from '@pixel-inspiration/react-libs/common';
@@ -34,11 +34,12 @@ class Stations extends PixelComponent{
 	 * @returns {JSXElement}
 	 */
 	render(props){
-		var {className,items} = this.props;
+		var {className,items,itemSelected,onItemSelect} = this.props;
 		return (<div className={ClassNames(Styles.container,className)}>
-			{_.map(items, item => {
-				return <li>{item.id}</li>
+			{_.map(items, (item, index) => {
+				return <ListItem key={index} data={item} label={item.name || `$${item.id}`} onClick={onItemSelect} />;
 			})}
+			{itemSelected ? <ListItem data={itemSelected} label={itemSelected.name || `$${itemSelected.id}`} /> : null}
 		</div>)
 	}
 }
@@ -47,7 +48,7 @@ Stations.propTypes = {
 	className : PropTypes.string,
 	//data : PropTypes.object.isRequired,
 	//items : PropTypes.array.isRequired,
-	//onClick : PropTypes.func.isRequired
+	onItemSelect : PropTypes.func.isRequired
 }
 
 Stations.defaultProps = {
@@ -56,3 +57,19 @@ Stations.defaultProps = {
 
 export default hot(module)(Stations);
 export {Stations,Styles as StationsStyles};
+
+class ListItem extends Component{
+	onClick = ( evt ) => {
+		this.props.onClick( this.props.data );
+	}
+	render(){
+		const {className,label} = this.props;
+		return (<div className={ClassNames(Styles.item,className)} onClick={this.onClick}>{label}</div>)
+	}
+}
+
+ListItem.propTypes = {
+	className : PropTypes.string,
+	label : PropTypes.string.isRequired
+}
+

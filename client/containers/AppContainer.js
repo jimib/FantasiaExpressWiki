@@ -22,10 +22,12 @@ import { loadStations } from '../actions/StationsAction';
 class AppContainer extends Component{
 
 	componentDidMount(){
-		this.props.updateStatus();
-		this.interval = setInterval( () => {
+		if( this.props.enableLogin ){
 			this.props.updateStatus();
-		}, 10000 );
+			this.interval = setInterval( () => {
+				this.props.updateStatus();
+			}, 10000 );
+		}
 	}
 
 	componentWillUnmount(){

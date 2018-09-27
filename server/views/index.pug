@@ -4,9 +4,21 @@ mixin addScript( src )
 mixin addStyle( src )
 	link(rel="stylesheet" href=src)
 
+mixin addVariable( id, value )
+	script.
+		window.#{id} = !{JSON.stringify(value)};
+
 html
 	head
 		<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+
+		- variables = locals.variables || {};
+		each variable, id in variables
+			+addVariable( id, variable )
+
+		- styles = locals.styles || [];
+		each style in styles
+			+addStyle( style )
 
 		block styles
 		
@@ -14,6 +26,8 @@ html
 		block body
 		
 		+addScript(`js/polyfill.js`)
+
+		
 
 		- scripts = locals.scripts || [];
 		each script in scripts
