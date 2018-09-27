@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import Stations from '../components/Stations';
-import { loadStations, selectStation, updateStation } from '../actions/StationsAction';
+import { loadStations, selectStation, updateStation, unselectStation, removeStation } from '../actions/StationsAction';
 
 
 const mapStateToProps = state => {
@@ -18,8 +18,14 @@ const mapDispatchToProps = dispatch => ({
 	onItemSelect : ( station ) => {
 		dispatch( selectStation( station ) );
 	},
+	onItemUnselect : ( ) => {
+		dispatch( unselectStation( ) );
+	},
 	onItemUpdate : ( station ) => {
 		dispatch( updateStation( station ) );
+	},
+	onItemRemove : ( station ) => {
+		dispatch( removeStation( station ) );
 	}
 });
 

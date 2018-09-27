@@ -17,6 +17,11 @@ const { getUsers } = require('../../controllers/users');
 //additional middleware
 libs.api.extendApp( app );
 
+//value is important as it executes the value
+router.db.get('stations').replaceById(2, {name:'xyz'}).value();
+
+console.log( 'stations', router.db.get('stations').value() );
+
 //parse incoming json
 app.use( middlewares );
 app.use( '/m', router );

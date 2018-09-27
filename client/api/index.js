@@ -23,7 +23,7 @@ export function updateStation( station ){
 }
 
 export function deleteStation( station ){
-	return delete( createRoutePath( `${URL_API_STATION}`, station ), station );
+	return del( createRoutePath( `${URL_API_STATION}`, station ), station );
 }
 
 export function getSession(){

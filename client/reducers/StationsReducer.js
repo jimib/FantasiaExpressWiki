@@ -46,7 +46,7 @@ const reducer = (state = INITIAL_STATE, action) => {
 				return state;
 				break;
 			case STATION_SELECTED:
-				state.indexItemSelected = _.indexOf( state.items, GetItemReference( state.items, action.station ) );
+				state.indexItemSelected = action.station ? _.indexOf( state.items, GetItemReference( state.items, action.station ) ) : -1;
 				return state;
 				break;
 			case STATIONS_LOAD_BEGIN:

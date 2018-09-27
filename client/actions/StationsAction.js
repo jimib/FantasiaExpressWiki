@@ -32,7 +32,7 @@ export const addStation = station => {
 
 export const removeStation = station => {
 	return ( dispatch, getState ) => {
-		return api.removeStation( station )
+		return api.deleteStation( station )
 		.then( () => {
 			return dispatch( stationRemoved( station ) );
 		} );
