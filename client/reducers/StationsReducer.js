@@ -16,11 +16,13 @@ import {
 	UpdateItem,
 	RemoveItem,
 	AddItem,
-	Update
+	Update,
+	GetItemReference
 } from '../utils/ReducerUtil';
 
 const INITIAL_STATE = {
 	items : [],
+	indexItemSelected : -1,
 	error : null,
 	loading : false
 }
@@ -44,7 +46,7 @@ const reducer = (state = INITIAL_STATE, action) => {
 				return state;
 				break;
 			case STATION_SELECTED:
-				state.itemSelected = action.station;
+				state.indexItemSelected = _.indexOf( state.items, GetItemReference( state.items, action.station ) );
 				return state;
 				break;
 			case STATIONS_LOAD_BEGIN:

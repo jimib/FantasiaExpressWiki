@@ -23,19 +23,28 @@ import {
 
 export const addStation = station => {
 	return ( dispatch, getState ) => {
-		return dispatch( stationAdded( station ) );
+		return api.addStation( station )
+		.then(() => {
+			return dispatch( stationAdded( station ) );
+		});
 	};
 }
 
 export const removeStation = station => {
 	return ( dispatch, getState ) => {
-		return dispatch( stationRemoved( station ) );
+		return api.removeStation( station )
+		.then( () => {
+			return dispatch( stationRemoved( station ) );
+		} );
 	};
 }
 
 export const updateStation = station => {
 	return ( dispatch, getState ) => {
-		return dispatch( stationUpdated( station ) );
+		return api.updateStation( station )
+		.then( () => {
+			return dispatch( stationUpdated( station ) );
+		} );
 	};
 }
 

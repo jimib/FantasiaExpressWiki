@@ -37,7 +37,8 @@ module.exports = {
         include: [
           path.resolve( DIR_APP_ROOT, 'client'),
           path.resolve( DIR_APP_ROOT, 'stories'),
-          path.resolve( DIR_APP_ROOT, 'node_modules', '@pixel-inspiration' )
+          path.resolve( DIR_APP_ROOT, 'node_modules', '@pixel-inspiration' ),
+          path.resolve( DIR_APP_ROOT, 'node_modules', '@meyouandus' )
         ],
         use: ['babel-loader?compact=false'],
       },
@@ -47,7 +48,8 @@ module.exports = {
         include: [
           path.resolve( DIR_APP_ROOT, 'client'),
           path.resolve( DIR_APP_ROOT, 'stories'),
-          path.resolve( DIR_APP_ROOT, 'node_modules', '@pixel-inspiration' )
+          path.resolve( DIR_APP_ROOT, 'node_modules', '@pixel-inspiration' ),
+          path.resolve( DIR_APP_ROOT, 'node_modules', '@meyouandus' )
         ],
         use: [
           'style-loader', 

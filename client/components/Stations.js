@@ -6,6 +6,8 @@ import { hot } from 'react-hot-loader';
 
 import Styles from './css/Stations.styl';
 
+import {JourneyEditor} from '@meyouandus/wikiskin';
+
 class Stations extends PixelComponent{
 	
 	/**
@@ -34,12 +36,17 @@ class Stations extends PixelComponent{
 	 * @returns {JSXElement}
 	 */
 	render(props){
-		var {className,items,itemSelected,onItemSelect} = this.props;
+		var {className,items,itemSelected,onItemSelect,onItemUpdate} = this.props;
 		return (<div className={ClassNames(Styles.container,className)}>
 			{_.map(items, (item, index) => {
 				return <ListItem key={index} data={item} label={item.name || `$${item.id}`} onClick={onItemSelect} />;
 			})}
-			{itemSelected ? <ListItem data={itemSelected} label={itemSelected.name || `$${itemSelected.id}`} /> : null}
+			{itemSelected ? <JourneyEditor stations={[itemSelected.position]} onStationsChange={( stations ) => {
+				//console.log('onStationsChange', stations );
+				let item = _.clone( itemSelected );
+				item.position = _.first( stations );
+				onItemUpdate( item );
+			}} /> : null}
 		</div>)
 	}
 }
@@ -48,7 +55,8 @@ Stations.propTypes = {
 	className : PropTypes.string,
 	//data : PropTypes.object.isRequired,
 	//items : PropTypes.array.isRequired,
-	onItemSelect : PropTypes.func.isRequired
+	onItemSelect : PropTypes.func.isRequired,
+	onItemUpdate : PropTypes.func.isRequired
 }
 
 Stations.defaultProps = {

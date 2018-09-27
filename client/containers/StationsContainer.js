@@ -1,13 +1,13 @@
 import { connect } from 'react-redux';
 
 import Stations from '../components/Stations';
-import { loadStations, selectStation } from '../actions/StationsAction';
+import { loadStations, selectStation, updateStation } from '../actions/StationsAction';
 
 
 const mapStateToProps = state => {
 	return ({
 		items : state.stations.items,
-		itemSelected : state.stations.itemSelected
+		itemSelected : _.get( state.stations.items, state.stations.indexItemSelected )
 	});
 }
 
@@ -17,6 +17,9 @@ const mapDispatchToProps = dispatch => ({
 	},
 	onItemSelect : ( station ) => {
 		dispatch( selectStation( station ) );
+	},
+	onItemUpdate : ( station ) => {
+		dispatch( updateStation( station ) );
 	}
 });
 
