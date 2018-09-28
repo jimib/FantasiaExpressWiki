@@ -145,25 +145,21 @@ class EditItem extends Component{
 
 		const getValue = (id) => getValueFromSources(id, changes, data);
 		
-		return <Modal
+		return <div
 		className={Styles.modal}
-		open={true}
-		onClose={onClose}
-		basic
-		size='small'
 		>
-		<Modal.Content className={Styles.content}>
+		<div className={Styles.content}>
 			<Form.Input className={Styles.input} name={'name'} value={getValue('name')} onChange={this.onChange} />
 			<JourneyEditor
 				className={Styles.map}
 				center={data.position||DEFAULT_POSITION}
-				events={[getValue('position')||DEFAULT_POSITION]} 
+				events={[{position:getValue('position')||DEFAULT_POSITION}]} 
 				onEventsChange={( events ) => {
 					this.onChange( null, {name:'position',value:_.first( events )} );
 				}} />
 			{hasChanges && <Button disabled={!hasChanges} className={Styles.save} color='green' onClick={this.onSave} content='Save' /> }
-		</Modal.Content>
-		</Modal>
+		</div>
+		</div>
 	}
 }
 

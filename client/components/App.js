@@ -20,6 +20,7 @@ import {
 import StationsContainer from '../containers/StationsContainer';
 import RoutesContainer from '../containers/RoutesContainer';
 import EventsContainer from '../containers/EventsContainer';
+import JourneyContainer from '../containers/JourneyContainer';
 
 
 class App extends Component {
@@ -38,22 +39,27 @@ class App extends Component {
 		console.log( pathname );
 		return (
 			<div className={Styles.container}>
-				<Button.Group>
-					{_.map([
-						{label:'Station',pathname:PATH_STATIONS},
-						{label:'Events',pathname:PATH_EVENTS},
-						{label:'Routes',pathname:PATH_ROUTES}
-					], (item, index) => {
-						return <Button key={index} primary={pathname == item.pathname} data={item.pathname} onClick={this.onNavigateTo}>{item.label}</Button>
-					})}
-				</Button.Group>
-				<Switch>
-					<Route path={PATH_STATIONS} component={StationsContainer} />
-					<Route path={PATH_EVENTS} component={EventsContainer} />
-					<Route path={PATH_ROUTES} component={RoutesContainer} />
-					
-					<Route render={() => <Redirect to={PATH_STATIONS} /> } />
-				</Switch>
+				<div className={Styles.map}>
+					{<JourneyContainer />}
+				</div>
+				<div className={Styles.panel}>
+					<Button.Group>
+						{_.map([
+							{label:'Station',pathname:PATH_STATIONS},
+							{label:'Events',pathname:PATH_EVENTS},
+							{label:'Routes',pathname:PATH_ROUTES}
+						], (item, index) => {
+							return <Button key={index} primary={pathname == item.pathname} data={item.pathname} onClick={this.onNavigateTo}>{item.label}</Button>
+						})}
+					</Button.Group>
+					<Switch>
+						{<Route path={PATH_STATIONS} component={StationsContainer} />}
+						{<Route path={PATH_EVENTS} component={EventsContainer} />}
+						{<Route path={PATH_ROUTES} component={RoutesContainer} />}
+						
+						{<Route render={() => <Redirect to={PATH_STATIONS} /> } />}
+					</Switch>
+				</div>
 			</div>
 		);
 	}

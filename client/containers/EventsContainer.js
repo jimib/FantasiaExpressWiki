@@ -7,7 +7,7 @@ import { loadEvents, selectEvent, updateEvent, unselectEvent, removeEvent, addEv
 const mapStateToProps = state => {
 	return ({
 		items : state.events.items,
-		itemSelected : _.get( state.events.items, state.events.indexItemSelected )
+		itemSelected : _.get( state.events.items, state.events.indexItemSelected ) ||  _.first( state.events.items )
 	});
 }
 

@@ -9,7 +9,7 @@ const mapStateToProps = state => {
 	return ({
 		stations : state.stations.items,
 		items : state.routes.items,
-		itemSelected : _.get( state.routes.items, state.routes.indexItemSelected )
+		itemSelected : _.get( state.routes.items, state.routes.indexItemSelected ) || _.first( state.routes.items )
 	});
 }
 

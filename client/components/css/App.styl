@@ -2,23 +2,18 @@
 
 .container
 	margin-top 0px
-	ul.menu
-		list-style-type none
-		margin 0 0 20 0
-		padding 0
 
-		&::after
-			display block
-			content ""
-			clear both
+	.map
+		width calc(100% - 420px)
+		height 100%
+		float left
+		padding 0px
+		ignorePadding()
 
-		li 
-			float left
-			margin 0 10 0 0
-
-			&.right
-				margin 0 0 0 10
-				float right
-
-			.link:hover
-				background-color #111
+	.panel
+		margin-top 15px
+		width 420px
+		float right
+		ignorePadding()
+		padding 0px 10px
+		

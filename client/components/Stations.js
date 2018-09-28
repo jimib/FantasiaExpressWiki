@@ -145,26 +145,21 @@ class EditItem extends Component{
 
 		const getValue = (id) => getValueFromSources(id, changes, data);
 		
-		return <Modal
+		return <div
 		className={Styles.modal}
-		open={true}
-		onClose={onClose}
-		basic
-		size='small'
 		>
-		<Modal.Content className={Styles.content}>
-			<Form.Input className={Styles.input} name={'name'} value={getValue('name')} onChange={this.onChange} />
-			<JourneyEditor
-				className={Styles.map}
-				center={data.position||DEFAULT_POSITION}
-				points={route?route.points:null}
-				stations={[getValue('position')||DEFAULT_POSITION]} 
-				onStationsChange={( stations ) => {
-					this.onChange( null, {name:'position',value:_.first( stations )} );
-				}} />
-			{hasChanges && <Button disabled={!hasChanges} className={Styles.save} color='green' onClick={this.onSave} content='Save' /> }
-		</Modal.Content>
-		</Modal>
+			<div className={Styles.content}>
+				<Form.Input className={Styles.input} name={'name'} value={getValue('name')} onChange={this.onChange} />
+				{<Button disabled={!hasChanges} className={Styles.save} color='green' onClick={this.onSave} content='Save' />}
+				<JourneyEditor
+					className={Styles.map}
+					center={data.position||DEFAULT_POSITION}
+					stations={[{position:getValue('position')||DEFAULT_POSITION}]}
+					onStationsChange={( stations ) => {
+						this.onChange( null, {name:'position',value:_.first( stations )} );
+					}} />
+			</div>
+		</div>
 	}
 }
 
