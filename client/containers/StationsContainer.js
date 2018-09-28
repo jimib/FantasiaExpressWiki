@@ -13,6 +13,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
 	onMount : () => {
+		dispatch( loadStations() );
+	},
+	onUnmount : () => {
 		//dispatch( loadStations() );
 	},
 	onItemSelect : ( station ) => {

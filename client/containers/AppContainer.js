@@ -89,7 +89,9 @@ const mapDispatchToProps = dispatch => ({
 	onLogin : ( username, password ) => dispatch( login(username, password) ),
 	onLogout : () => dispatch( logout() ),
 	onErrorDismiss : () => dispatch( hideError() ),
-	onNavigateTo : ( path ) => dispatch( navigateTo( path ) )
+	onNavigateTo : ( path ) => {
+		dispatch( navigateTo( path ) )
+	}
 });
 
 export default connect(

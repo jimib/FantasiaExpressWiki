@@ -1,22 +1,18 @@
-import { hot } from 'react-hot-loader';
-import React, {Component} from 'react';
+import React, {Component,Fragment} from 'react';
 import PropTypes from 'prop-types';
 import { PixelComponent } from '@pixel-inspiration/react-libs/components';
 import { ClassNames, getValueFromSources } from '@pixel-inspiration/react-libs/common';
+import { hot } from 'react-hot-loader';
 
-import Styles from './css/Stations.styl';
+import Styles from './css/Routes.styl';
 
 import {JourneyEditor} from '@meyouandus/wikiskin';
 import {Modal,Header,Button,Icon,Form} from 'semantic-ui-react';
 
-const DEFAULT_POSITION = {
-	lat: 51.531109166116295,
-	lng: -0.125550741249441
-}
-class Stations extends PixelComponent{
+class Routes extends PixelComponent{
 	
 	/**
-	 * @memberOf Stations
+	 * @memberOf Routes
 	 * @constructs
 	 * @param {object} props 
 	 */
@@ -26,6 +22,7 @@ class Stations extends PixelComponent{
 		}
 	}
 
+	
 	componentDidMount(){
 		this.props.onMount();
 	}
@@ -35,23 +32,14 @@ class Stations extends PixelComponent{
 	}
 
 	/**
-	 * @memberOf Stations
-	 * @function onClick
-	 * @prop {Event}
-	 * @returns null
-	 */
-	onClick = (evt) => {
-	}
-
-	/**
-	 * @memberOf Stations
+	 * @memberOf Routes
 	 * @function render
 	 * @returns {JSXElement}
 	 */
 	render(props){
-		var {className,items,itemSelected,onItemSelect,onItemUnselect,onItemUpdate,onItemRemove,onItemCreate} = this.props;
+		var {className,stations,items,itemSelected,onItemSelect,onItemUnselect,onItemUpdate,onItemRemove,onItemCreate} = this.props;
 		return (<div className={ClassNames(Styles.container,className)}>
-			<h1>Stations</h1>
+			<h1>Routes</h1>
 			<div className={Styles.content}>
 				<div className={Styles.list}>
 					{_.map(items, (item, index) => {
@@ -63,15 +51,15 @@ class Stations extends PixelComponent{
 									onDelete={onItemRemove} />;
 					})}
 				</div>
-				<Button floated='right' icon='add' content='Station' onClick={onItemCreate} />
+				<Button floated='right' icon='add' content='Route' onClick={onItemCreate} />
 			</div>
 
-			{itemSelected ? <EditItem data={itemSelected} onClose={onItemUnselect} onSave={onItemUpdate} /> : null}
+			{itemSelected ? <EditItem data={itemSelected} stations={stations} onClose={onItemUnselect} onSave={onItemUpdate} /> : null}
 		</div>)
 	}
 }
 
-Stations.propTypes = {
+Routes.propTypes = {
 	className : PropTypes.string,
 	//data : PropTypes.object.isRequired,
 	//items : PropTypes.array.isRequired,
@@ -80,12 +68,12 @@ Stations.propTypes = {
 	onItemRemove : PropTypes.func.isRequired
 }
 
-Stations.defaultProps = {
+Routes.defaultProps = {
 	//onClick : () => console.warn('onClick has not been implemented'),
 }
 
-export default hot(module)(Stations);
-export {Stations,Styles as StationsStyles};
+export default hot(module)(Routes);
+export {Routes,Styles as RoutesStyles};
 
 class ListItem extends Component{
 	onEdit = ( evt ) => {
@@ -139,7 +127,7 @@ class EditItem extends Component{
 	}
 
 	render(){
-		const {data,onSave,onClose} = this.props;
+		const {data,stations,onSave,onClose} = this.props;
 		const {changes} = this.state;
 		const hasChanges = _.size( _.keys(changes) ) > 0 ? true : false;
 
@@ -156,10 +144,10 @@ class EditItem extends Component{
 			<Form.Input className={Styles.input} name={'name'} value={getValue('name')} onChange={this.onChange} />
 			<JourneyEditor
 				className={Styles.map}
-				center={data.position||DEFAULT_POSITION}
-				stations={[getValue('position')||DEFAULT_POSITION]} 
-				onStationsChange={( stations ) => {
-					this.onChange( null, {name:'position',value:_.first( stations )} );
+				stations={_.map(stations, item => item.position)} 
+				points={getValue('points')} 
+				onPointsChange={( points ) => {
+					this.onChange( null, {name:'points',value:points} );
 				}} />
 			{hasChanges && <Button disabled={!hasChanges} className={Styles.save} color='green' onClick={this.onSave} content='Save' /> }
 		</Modal.Content>

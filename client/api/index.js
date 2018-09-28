@@ -5,6 +5,8 @@ import {
 	URL_API,
 	URL_API_STATION,
 	URL_API_STATIONS,
+	URL_API_ROUTE,
+	URL_API_ROUTES,
 	URL_AUTH_SESSION,
 	URL_AUTH_LOGIN, 
 	URL_AUTH_LOGOUT
@@ -24,6 +26,22 @@ export function updateStation( station ){
 
 export function deleteStation( station ){
 	return del( createRoutePath( `${URL_API_STATION}`, station ), station );
+}
+
+export function getRoutes( ){
+	return get( `${URL_API_ROUTES}` );
+}
+
+export function addRoute( route ){
+	return post( `${URL_API_ROUTES}`, route );
+}
+
+export function updateRoute( route ){
+	return put( createRoutePath( `${URL_API_ROUTE}`, route ), route );
+}
+
+export function deleteRoute( route ){
+	return del( createRoutePath( `${URL_API_ROUTE}`, route ), route );
 }
 
 export function getSession(){

@@ -17,11 +17,13 @@ import {
 	PATH_ROUTES
 } from '../constants/PathConstants';
 import StationsContainer from '../containers/StationsContainer';
+import RoutesContainer from '../containers/RoutesContainer';
 
 
 class App extends Component {
-	componentDidMount(){
-		this.props.onMount();
+
+	onNavigateTo = ( evt, btn ) => {
+		this.props.onNavigateTo( btn.data );
 	}
 	/**
 	 * @memberOf App
@@ -29,7 +31,7 @@ class App extends Component {
 	 * @returns {JSXElement}
 	 */
 	render() {
-		const { onNavigateTo, location } = this.props;
+		const { location } = this.props;
 		const {pathname} = location || {};
 		console.log( pathname );
 		return (
@@ -40,13 +42,13 @@ class App extends Component {
 						{label:'Events',pathname:PATH_EVENTS},
 						{label:'Routes',pathname:PATH_ROUTES}
 					], (item, index) => {
-						return <Button key={index} primary={pathname == item.pathname} data={item.pathname} onClick={onNavigateTo}>{item.label}</Button>
+						return <Button key={index} primary={pathname == item.pathname} data={item.pathname} onClick={this.onNavigateTo}>{item.label}</Button>
 					})}
 				</Button.Group>
 				<Switch>
 					<Route path={PATH_STATIONS} component={StationsContainer} />
 					<Route path={PATH_EVENTS} render={() => {return <h1>Events</h1>}} />
-					<Route path={PATH_ROUTES} render={() => {return <h1>Routes</h1>}} />
+					<Route path={PATH_ROUTES} component={RoutesContainer} />
 					
 					<Route render={() => <Redirect to={PATH_STATIONS} /> } />
 				</Switch>
@@ -56,7 +58,7 @@ class App extends Component {
 }
 
 App.propTypes = {
-	history : PropTypes.object.isRequired
+	location : PropTypes.object.isRequired
 }
 
 const AppWithRouter = withRouter( App );
