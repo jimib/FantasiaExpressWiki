@@ -5,6 +5,8 @@ import {
 	URL_API,
 	URL_API_STATION,
 	URL_API_STATIONS,
+	URL_API_EVENT,
+	URL_API_EVENTS,
 	URL_API_ROUTE,
 	URL_API_ROUTES,
 	URL_AUTH_SESSION,
@@ -26,6 +28,22 @@ export function updateStation( station ){
 
 export function deleteStation( station ){
 	return del( createRoutePath( `${URL_API_STATION}`, station ), station );
+}
+
+export function getEvents( event ){
+	return get( `${URL_API_EVENTS}`, event );
+}
+
+export function addEvent( event ){
+	return post( `${URL_API_EVENTS}`, event );
+}
+
+export function updateEvent( event ){
+	return put( createRoutePath( `${URL_API_EVENT}`, event ), event );
+}
+
+export function deleteEvent( event ){
+	return del( createRoutePath( `${URL_API_EVENT}`, event ), event );
 }
 
 export function getRoutes( ){

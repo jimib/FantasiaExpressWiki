@@ -16,8 +16,10 @@ import {
 	PATH_EVENTS,
 	PATH_ROUTES
 } from '../constants/PathConstants';
+
 import StationsContainer from '../containers/StationsContainer';
 import RoutesContainer from '../containers/RoutesContainer';
+import EventsContainer from '../containers/EventsContainer';
 
 
 class App extends Component {
@@ -47,7 +49,7 @@ class App extends Component {
 				</Button.Group>
 				<Switch>
 					<Route path={PATH_STATIONS} component={StationsContainer} />
-					<Route path={PATH_EVENTS} render={() => {return <h1>Events</h1>}} />
+					<Route path={PATH_EVENTS} component={EventsContainer} />
 					<Route path={PATH_ROUTES} component={RoutesContainer} />
 					
 					<Route render={() => <Redirect to={PATH_STATIONS} /> } />

@@ -17,7 +17,24 @@
       "id": 2
     }
   ],
-  "events": [],
+  "events": [
+    {
+      "name": "Event1",
+      "position": {
+        "lat": 51.54541661120689,
+        "lng": -0.11490773589483183
+      },
+      "id": 1
+    },
+    {
+      "name": "Event2",
+      "position": {
+        "lat": 51.557371622265265,
+        "lng": -0.12932729154832145
+      },
+      "id": 2
+    }
+  ],
   "routes": [
     {
       "name": "London To Manchester",

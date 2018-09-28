@@ -7,7 +7,8 @@ import { loadStations, selectStation, updateStation, unselectStation, removeStat
 const mapStateToProps = state => {
 	return ({
 		items : state.stations.items,
-		itemSelected : _.get( state.stations.items, state.stations.indexItemSelected )
+		itemSelected : _.get( state.stations.items, state.stations.indexItemSelected ),
+		route : _.first( state.routes.items )
 	});
 }
 
