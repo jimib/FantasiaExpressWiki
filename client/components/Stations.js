@@ -6,13 +6,9 @@ import { ClassNames, getValueFromSources } from '@pixel-inspiration/react-libs/c
 
 import Styles from './css/Stations.styl';
 
-import {JourneyEditor} from '@meyouandus/wikiskin';
+import {MapEditorOverlayPointsComponent} from '@meyouandus/wikiskin';
 import {Modal,Header,Button,Icon,Form} from 'semantic-ui-react';
 
-const DEFAULT_POSITION = {
-	lat: 51.531109166116295,
-	lng: -0.125550741249441
-}
 class Stations extends PixelComponent{
 	
 	/**
@@ -49,25 +45,10 @@ class Stations extends PixelComponent{
 	 * @returns {JSXElement}
 	 */
 	render(props){
-		var {className,route,items,itemSelected,onItemSelect,onItemUnselect,onItemUpdate,onItemRemove,onItemCreate} = this.props;
-		return (<div className={ClassNames(Styles.container,className)}>
-			<h1>Stations</h1>
-			<div className={Styles.content}>
-				<div className={Styles.list}>
-					{_.map(items, (item, index) => {
-						return <ListItem 
-									key={index} 
-									data={item} 
-									label={item.name || `$${item.id}`} 
-									onEdit={onItemSelect} 
-									onDelete={onItemRemove} />;
-					})}
-				</div>
-				<Button floated='right' icon='add' content='Station' onClick={onItemCreate} />
-			</div>
-
-			{itemSelected ? <EditItem data={itemSelected} route={route} onClose={onItemUnselect} onSave={onItemUpdate} /> : null}
-		</div>)
+		var {className,map,items,itemSelected,onItemSelect,onItemUnselect,onItemUpdate,onItemRemove,onItemCreate} = this.props;
+		return (<MapEditorOverlayPointsComponent map={map} color='green' items={items} changeOnDrag={false} onChange={( item, items ) => {
+			onItemUpdate( item );
+		}} />)
 	}
 }
 

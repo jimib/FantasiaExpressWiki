@@ -41,6 +41,7 @@ export const removeEvent = event => {
 
 export const updateEvent = event => {
 	return ( dispatch, getState ) => {
+		dispatch( eventUpdated( event ) );
 		return api.updateEvent( event )
 		.then( () => {
 			return dispatch( eventUpdated( event ) );

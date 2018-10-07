@@ -6,7 +6,7 @@ import { hot } from 'react-hot-loader';
 
 import Styles from './css/Routes.styl';
 
-import {JourneyEditor} from '@meyouandus/wikiskin';
+import {MapEditorOverlayPointsComponent,MapEditorLineCurveComponent} from '@meyouandus/wikiskin';
 import {Modal,Header,Button,Icon,Form} from 'semantic-ui-react';
 
 class Routes extends PixelComponent{
@@ -37,25 +37,15 @@ class Routes extends PixelComponent{
 	 * @returns {JSXElement}
 	 */
 	render(props){
-		var {className,stations,items,itemSelected,onItemSelect,onItemUnselect,onItemUpdate,onItemRemove,onItemCreate} = this.props;
-		return (<div className={ClassNames(Styles.container,className)}>
-			<h1>Routes</h1>
-			<div className={Styles.content}>
-				<div className={Styles.list}>
-					{_.map(items, (item, index) => {
-						return <ListItem 
-									key={index} 
-									data={item} 
-									label={item.name || `$${item.id}`} 
-									onEdit={onItemSelect} 
-									onDelete={onItemRemove} />;
-					})}
-				</div>
-				<Button floated='right' icon='add' content='Route' onClick={onItemCreate} />
-			</div>
-
-			{itemSelected ? <EditItem data={itemSelected} stations={stations} onClose={onItemUnselect} onSave={onItemUpdate} /> : null}
-		</div>)
+		var {className,map,items,itemSelected,onItemSelect,onItemUnselect,onItemUpdate,onItemRemove,onItemCreate} = this.props;
+		return (<Fragment>
+			<MapEditorLineCurveComponent map={map} color='red' items={items} changeOnDrag={false} onChange={( item, items ) => {
+				onItemUpdate( item );
+			}} />
+			<MapEditorOverlayPointsComponent map={map} color='red' items={items} changeOnDrag={false} onChange={( item, items ) => {
+				onItemUpdate( item );
+			}} />
+		</Fragment>)
 	}
 }
 

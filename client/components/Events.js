@@ -6,13 +6,9 @@ import { ClassNames, getValueFromSources } from '@pixel-inspiration/react-libs/c
 
 import Styles from './css/Events.styl';
 
-import {JourneyEditor} from '@meyouandus/wikiskin';
+import {MapEditorOverlayPointsComponent} from '@meyouandus/wikiskin';
 import {Modal,Header,Button,Icon,Form} from 'semantic-ui-react';
 
-const DEFAULT_POSITION = {
-	lat: 51.531109166116295,
-	lng: -0.125550741249441
-}
 class Events extends PixelComponent{
 	
 	/**
@@ -49,25 +45,10 @@ class Events extends PixelComponent{
 	 * @returns {JSXElement}
 	 */
 	render(props){
-		var {className,items,itemSelected,onItemSelect,onItemUnselect,onItemUpdate,onItemRemove,onItemCreate} = this.props;
-		return (<div className={ClassNames(Styles.container,className)}>
-			<h1>Events</h1>
-			<div className={Styles.content}>
-				<div className={Styles.list}>
-					{_.map(items, (item, index) => {
-						return <ListItem 
-									key={index} 
-									data={item} 
-									label={item.name || `$${item.id}`} 
-									onEdit={onItemSelect} 
-									onDelete={onItemRemove} />;
-					})}
-				</div>
-				<Button floated='right' icon='add' content='Event' onClick={onItemCreate} />
-			</div>
-
-			{itemSelected ? <EditItem data={itemSelected} onClose={onItemUnselect} onSave={onItemUpdate} /> : null}
-		</div>)
+		var {className,map,items,itemSelected,onItemSelect,onItemUnselect,onItemUpdate,onItemRemove,onItemCreate} = this.props;
+		return (<MapEditorOverlayPointsComponent map={map} color='blue' items={items} changeOnDrag={false} onChange={( item, items ) => {
+			onItemUpdate( item );
+		}} />)
 	}
 }
 
@@ -139,7 +120,7 @@ class EditItem extends Component{
 	}
 
 	render(){
-		const {data,onSave,onClose} = this.props;
+		const {data,route,onSave,onClose} = this.props;
 		const {changes} = this.state;
 		const hasChanges = _.size( _.keys(changes) ) > 0 ? true : false;
 
@@ -148,17 +129,17 @@ class EditItem extends Component{
 		return <div
 		className={Styles.modal}
 		>
-		<div className={Styles.content}>
-			<Form.Input className={Styles.input} name={'name'} value={getValue('name')} onChange={this.onChange} />
-			<JourneyEditor
-				className={Styles.map}
-				center={data.position||DEFAULT_POSITION}
-				events={[{position:getValue('position')||DEFAULT_POSITION}]} 
-				onEventsChange={( events ) => {
-					this.onChange( null, {name:'position',value:_.first( events )} );
-				}} />
-			{hasChanges && <Button disabled={!hasChanges} className={Styles.save} color='green' onClick={this.onSave} content='Save' /> }
-		</div>
+			<div className={Styles.content}>
+				<Form.Input className={Styles.input} name={'name'} value={getValue('name')} onChange={this.onChange} />
+				{<Button disabled={!hasChanges} className={Styles.save} color='green' onClick={this.onSave} content='Save' />}
+				<JourneyEditor
+					className={Styles.map}
+					center={data.position||DEFAULT_POSITION}
+					stations={[{position:getValue('position')||DEFAULT_POSITION}]}
+					onEventsChange={( stations ) => {
+						this.onChange( null, {name:'position',value:_.first( stations )} );
+					}} />
+			</div>
 		</div>
 	}
 }

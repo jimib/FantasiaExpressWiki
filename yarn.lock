@@ -15,6 +15,14 @@
     core-js "^2.5.6"
     regenerator-runtime "^0.11.1"
 
+"@jimib/pa-tasks-react-skin@jimib/Personal-Assistant-Tasks-React-Skin#1.0.17":
+  version "1.0.17"
+  resolved "https://codeload.github.com/jimib/Personal-Assistant-Tasks-React-Skin/tar.gz/325186e72a50cbc6dc7d740e6128fe9758c9165d"
+  dependencies:
+    bluebird "^3.5.2"
+    fs-extra-promise "^1.0.1"
+    lodash "^4.17.11"
+
 "@mapbox/geojson-area@0.2.2":
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/@mapbox/geojson-area/-/geojson-area-0.2.2.tgz#18d7814aa36bf23fbbcc379f8e26a22927debf10"
@@ -55,10 +63,11 @@
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@mapbox/whoots-js/-/whoots-js-3.1.0.tgz#497c67a1cef50d1a2459ba60f315e448d2ad87fe"
 
-"@meyouandus/wikiskin@jimib/FantasiaExpressWikiSkin#0.0.16":
-  version "0.0.16"
-  resolved "git+ssh://git@github.com/jimib/FantasiaExpressWikiSkin.git#b714668752b5dca43e80ef3031b8e79b336b0077"
+"@meyouandus/wikiskin@jimib/FantasiaExpressWikiSkin#0.0.22":
+  version "0.0.22"
+  resolved "git+ssh://git@github.com/jimib/FantasiaExpressWikiSkin.git#7390cc52def5e6659bab90792910d0cee0be2d4a"
   dependencies:
+    "@jimib/pa-tasks-react-skin" jimib/Personal-Assistant-Tasks-React-Skin#1.0.17
     "@pixel-inspiration/common-libs" "github:pixelinspiration/Pixel-Internal-Node-Libs#1.10.0"
     "@pixel-inspiration/react-libs" "github:pixelinspiration/Pixel-Internal-React-Libs#1.0.37"
     "@turf/turf" "^5.1.6"
@@ -70,11 +79,13 @@
     react-draggable "^3.0.5"
     react-mapbox-gl "^3.9.2"
     semantic-ui-react "^0.82.3"
+    svg.js "^2.6.6"
 
-"@meyouandus/wikiskin@jimib/FantasiaExpressWikiSkin#0.0.17":
-  version "0.0.17"
-  resolved "git+ssh://git@github.com/jimib/FantasiaExpressWikiSkin.git#e1283b4030d9d46f3692fb41b5250a9968e16226"
+"@meyouandus/wikiskin@jimib/FantasiaExpressWikiSkin#0.0.23":
+  version "0.0.23"
+  resolved "git+ssh://git@github.com/jimib/FantasiaExpressWikiSkin.git#90886ceca2758ce40775c495157a4c2653b0cbb5"
   dependencies:
+    "@jimib/pa-tasks-react-skin" jimib/Personal-Assistant-Tasks-React-Skin#1.0.17
     "@pixel-inspiration/common-libs" "github:pixelinspiration/Pixel-Internal-Node-Libs#1.10.0"
     "@pixel-inspiration/react-libs" "github:pixelinspiration/Pixel-Internal-React-Libs#1.0.37"
     "@turf/turf" "^5.1.6"
@@ -86,6 +97,7 @@
     react-draggable "^3.0.5"
     react-mapbox-gl "^3.9.2"
     semantic-ui-react "^0.82.3"
+    svg.js "^2.6.6"
 
 "@pixel-inspiration/common-libs@github:pixelinspiration/Pixel-Internal-Node-Libs#1.10.0":
   version "1.10.0"
@@ -2826,6 +2838,10 @@ block-stream@*:
 bluebird@^3.4.7, bluebird@^3.5.0, bluebird@^3.5.1, bluebird@~3.5.0:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.1.tgz#d9551f9de98f1fcda1e683d17ee91a0602ee2eb9"
+
+bluebird@^3.5.2:
+  version "3.5.2"
+  resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.2.tgz#1be0908e054a751754549c270489c1505d4ab15a"
 
 bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.4.0:
   version "4.11.8"
@@ -6628,7 +6644,7 @@ lodash@3.x:
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
 
-lodash@4:
+lodash@4, lodash@^4.17.11:
   version "4.17.11"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
 
@@ -9942,6 +9958,10 @@ supports-color@^5.3.0, supports-color@^5.4.0:
 svg-tag-names@^1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/svg-tag-names/-/svg-tag-names-1.1.1.tgz#9641b29ef71025ee094c7043f7cdde7d99fbd50a"
+
+svg.js@^2.6.6:
+  version "2.6.6"
+  resolved "https://registry.yarnpkg.com/svg.js/-/svg.js-2.6.6.tgz#27e9ada6231d0d35ded2c5252f52f19101104ed8"
 
 svgo@^0.7.0:
   version "0.7.2"

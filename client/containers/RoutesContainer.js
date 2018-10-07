@@ -7,8 +7,7 @@ import { loadStations } from '../actions/StationsAction';
 
 const mapStateToProps = state => {
 	return ({
-		stations : state.stations.items,
-		items : state.routes.items,
+		items : _.first( state.routes.items ).points,
 		itemSelected : _.get( state.routes.items, state.routes.indexItemSelected ) || _.first( state.routes.items )
 	});
 }

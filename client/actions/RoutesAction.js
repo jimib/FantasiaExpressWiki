@@ -41,6 +41,7 @@ export const removeRoute = route => {
 
 export const updateRoute = route => {
 	return ( dispatch, getState ) => {
+		dispatch( routeUpdated( route ) );
 		return api.updateRoute( route )
 		.then( () => {
 			return dispatch( routeUpdated( route ) );

@@ -41,6 +41,7 @@ export const removeStation = station => {
 
 export const updateStation = station => {
 	return ( dispatch, getState ) => {
+		dispatch( stationUpdated( station ) );
 		return api.updateStation( station )
 		.then( () => {
 			return dispatch( stationUpdated( station ) );

@@ -36,13 +36,12 @@ class App extends Component {
 	render() {
 		const { location } = this.props;
 		const {pathname} = location || {};
-		console.log( pathname );
 		return (
 			<div className={Styles.container}>
 				<div className={Styles.map}>
 					{<JourneyContainer />}
 				</div>
-				<div className={Styles.panel}>
+				{false && <div className={Styles.panel}>
 					<Button.Group>
 						{_.map([
 							{label:'Station',pathname:PATH_STATIONS},
@@ -53,13 +52,9 @@ class App extends Component {
 						})}
 					</Button.Group>
 					<Switch>
-						{<Route path={PATH_STATIONS} component={StationsContainer} />}
-						{<Route path={PATH_EVENTS} component={EventsContainer} />}
-						{<Route path={PATH_ROUTES} component={RoutesContainer} />}
 						
-						{<Route render={() => <Redirect to={PATH_STATIONS} /> } />}
 					</Switch>
-				</div>
+				</div> }
 			</div>
 		);
 	}
