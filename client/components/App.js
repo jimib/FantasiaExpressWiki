@@ -36,25 +36,10 @@ class App extends Component {
 	render() {
 		const { location } = this.props;
 		const {pathname} = location || {};
+		
 		return (
 			<div className={Styles.container}>
-				<div className={Styles.map}>
-					{<JourneyContainer />}
-				</div>
-				{false && <div className={Styles.panel}>
-					<Button.Group>
-						{_.map([
-							{label:'Station',pathname:PATH_STATIONS},
-							{label:'Events',pathname:PATH_EVENTS},
-							{label:'Routes',pathname:PATH_ROUTES}
-						], (item, index) => {
-							return <Button key={index} primary={pathname == item.pathname} data={item.pathname} onClick={this.onNavigateTo}>{item.label}</Button>
-						})}
-					</Button.Group>
-					<Switch>
-						
-					</Switch>
-				</div> }
+				<JourneyContainer className={Styles.map} />
 			</div>
 		);
 	}

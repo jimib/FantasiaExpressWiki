@@ -20,53 +20,33 @@ const DEFAULT_POSITION = {
 	lng: -0.125550741249441
 }
 
+const MENU_ITEM_STATIONS = 'Stations';
+const MENU_ITEM_EVENTS = 'Events';
+const MENU_ITEM_ROUTE = 'Route';
+const MENU_ITEMS = [
+	MENU_ITEM_ROUTE,
+	MENU_ITEM_STATIONS,
+	MENU_ITEM_EVENTS,
+]
+
 export default class Journey extends PixelComponent{
-	
-	/**
-	 * @memberOf Journey
-	 * @constructs
-	 * @param {object} props 
-	 */
-	constructor(props){
-		super(props);
-		this.state = {
-			speed : 0,
-			position : 0
-		}
-	}
-
-	componentDidMount(){
-		this.props.onMount();
-
-		let timeLastUpdate = Date.now();
-		this.interval = setInterval( () => {
-			let {position,speed} = this.state;
-			let timeNow = Date.now();
-			position += 100 * speed * (timeNow - timeLastUpdate) / 1000;
-			timeLastUpdate = timeNow;
-
-			this.setState({
-				position
-			});
-
-		}, 1000 );
+	state = {
+		itemSelected : null
 	}
 	
 	componentWillUnmount(){
 		this.props.onUnmount();
 	}
+	
+	componentDidMount(){
+		this.props.onMount();
+	}
 
-	/**
-	 * @memberOf Journey
-	 * @function onChange
-	 * @prop {Journey}
-	 * @returns null
-	 */
-	onSpeedChange = (evt) => {
-		const change = getInputEventChanges( evt );
-		this.setState( change );
-
-
+	onItemSelected = ( evt, btn ) => {
+		//console.log( btn.data );
+		this.setState({
+			itemSelected : btn.data
+		});
 	}
 
 	/**
@@ -75,50 +55,26 @@ export default class Journey extends PixelComponent{
 	 * @returns {JSXElement}
 	 */
 	render(props){
-		const {className,stations,events,route,onStationUpdate,onEventUpdate,onRouteUpdate} = this.props;
-		const {speed,position} = this.state;
-		let train = null;
-		let angle = 0;
+		const {className} = this.props;
+		let {itemSelected} = this.state;
+		
+		itemSelected = itemSelected || _.first(MENU_ITEMS);
 
-		if( route ){
-			let ipnt;
-			let total = 0;
-
-			_.each( route.points, pnt => {
-				if( ipnt ){
-					if( total < position || total == 0 ){
-						//get the distance between 2 points
-						const sep = distanceBetweenPnts(pnt,ipnt);
-						total += sep;
-
-						if( total >= position ){
-							const ratio = 1 - ((total - position) / sep);
-							train = {
-								lat : ipnt.lat + ratio * (pnt.lat - ipnt.lat),
-								lng : ipnt.lng + ratio * (pnt.lng - ipnt.lng)
-							}
-
-							angle = angleBetweenPnts( ipnt, pnt );
-						}
-					}
-				}
-				ipnt = pnt;
-			} )
-
-		}
-	
 		return (<div className={ClassNames(Styles.container,className)}>
 
-			<input type='range' name='speed' data-type='number' min='-10' max='10' step='0.1' value={speed} onChange={this.onSpeedChange} />
 			{ <MapEditor
 				className={Styles.map}
 				center={DEFAULT_POSITION}>
-				<RoutesContainer />
-				<StationsContainer />
-				<EventsContainer />
+				<RoutesContainer disabled={itemSelected != MENU_ITEM_ROUTE} />
+				<StationsContainer disabled={itemSelected != MENU_ITEM_STATIONS} />
+				<EventsContainer disabled={itemSelected != MENU_ITEM_EVENTS} />
 			</MapEditor> }
 
-			{false && train && <Compass className={Styles.compass} direction={-angle} />}
+			<Button.Group className={Styles.controls}>
+				{_.map(MENU_ITEMS, (item, index) => {
+					return <Button key={index} primary={itemSelected == item} data={item} onClick={this.onItemSelected}>{item}</Button>
+				})}
+			</Button.Group>
 		</div>)
 	}
 }

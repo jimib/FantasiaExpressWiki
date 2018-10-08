@@ -1,13 +1,14 @@
 import { connect } from 'react-redux';
 
-import Routes from '../components/Routes';
+import Route from '../components/Routes';
 import { loadRoutes, selectRoute, updateRoute, unselectRoute, removeRoute, addRoute } from '../actions/RoutesAction';
 import { loadStations } from '../actions/StationsAction';
 
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, props) => {
 	return ({
-		items : _.first( state.routes.items ).points,
+		disabled : props.disabled,
+		items : _.first( state.routes.items ),
 		itemSelected : _.get( state.routes.items, state.routes.indexItemSelected ) || _.first( state.routes.items )
 	});
 }
@@ -16,6 +17,7 @@ const mapDispatchToProps = dispatch => ({
 	onMount : () => {
 		dispatch( loadRoutes() );
 		dispatch( loadStations() );
+
 	},
 	onUnmount : () => {
 		//dispatch( loadRoutes() );
@@ -47,5 +49,5 @@ export default connect(
 	mapStateToProps,
 	mapDispatchToProps
 )( 
-	Routes
+	Route
 );

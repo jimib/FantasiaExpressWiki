@@ -83,7 +83,7 @@
     "webpack-dev-server": "^2.11.1"
   },
   "dependencies": {
-    "@meyouandus/wikiskin": "jimib/FantasiaExpressWikiSkin#0.0.23",
+    "@meyouandus/wikiskin": "jimib/FantasiaExpressWikiSkin#0.0.25",
     "@pixel-inspiration/common-libs": "github:pixelinspiration/Pixel-Internal-Node-Libs#1.10.0",
     "@pixel-inspiration/react-libs": "PixelInspiration/Pixel-Internal-React-Libs#1.0.42",
     "@pixel-inspiration/react-skin": "PixelInspiration/Pixel-Internal-ReactSkin-Barebones#1.0.5",

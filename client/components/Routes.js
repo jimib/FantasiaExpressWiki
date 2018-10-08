@@ -37,14 +37,18 @@ class Routes extends PixelComponent{
 	 * @returns {JSXElement}
 	 */
 	render(props){
-		var {className,map,items,itemSelected,onItemSelect,onItemUnselect,onItemUpdate,onItemRemove,onItemCreate} = this.props;
+		var {className,map,disabled,itemSelected,onItemSelect,onItemUnselect,onItemUpdate,onItemRemove,onItemCreate} = this.props;
+		const points = itemSelected ? itemSelected.points : null;
+
 		return (<Fragment>
-			<MapEditorLineCurveComponent map={map} color='red' items={items} changeOnDrag={false} onChange={( item, items ) => {
-				onItemUpdate( item );
-			}} />
-			<MapEditorOverlayPointsComponent map={map} color='red' items={items} changeOnDrag={false} onChange={( item, items ) => {
-				onItemUpdate( item );
-			}} />
+			{points && <MapEditorLineCurveComponent disabled={disabled} map={map} color='red' items={points} changeOnDrag={false} />}
+			{points && <MapEditorOverlayPointsComponent disabled={disabled} map={map} color='red' items={points} changeOnDrag={false} onChange={( point, points ) => {
+				const itemUpdate = _.assign({},itemSelected,{points});
+				console.log( itemUpdate.points[2], point );
+				onItemUpdate( itemUpdate );
+			}} onChangeComplete={() => {
+				console.log('onChangeComplete');
+			}} />}
 		</Fragment>)
 	}
 }

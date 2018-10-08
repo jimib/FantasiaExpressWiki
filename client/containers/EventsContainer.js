@@ -4,8 +4,9 @@ import Events from '../components/Events';
 import { loadEvents, selectEvent, updateEvent, unselectEvent, removeEvent, addEvent } from '../actions/EventsAction';
 
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, props) => {
 	return ({
+		disabled : props.disabled,
 		items : state.events.items,
 		itemSelected : _.get( state.events.items, state.events.indexItemSelected ) ||  _.first( state.events.items )
 	});

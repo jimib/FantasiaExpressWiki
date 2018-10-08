@@ -45,8 +45,8 @@ class Stations extends PixelComponent{
 	 * @returns {JSXElement}
 	 */
 	render(props){
-		var {className,map,items,itemSelected,onItemSelect,onItemUnselect,onItemUpdate,onItemRemove,onItemCreate} = this.props;
-		return (<MapEditorOverlayPointsComponent map={map} color='green' items={items} changeOnDrag={false} onChange={( item, items ) => {
+		var {className,map,disabled,items,itemSelected,onItemSelect,onItemUnselect,onItemUpdate,onItemRemove,onItemCreate} = this.props;
+		return (<MapEditorOverlayPointsComponent map={map} disabled={disabled} color='green' items={items} changeOnDrag={false} onChange={( item, items ) => {
 			onItemUpdate( item );
 		}} />)
 	}

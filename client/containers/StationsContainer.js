@@ -4,8 +4,9 @@ import Stations from '../components/Stations';
 import { loadStations, selectStation, updateStation, unselectStation, removeStation, addStation } from '../actions/StationsAction';
 
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, props) => {
 	return ({
+		disabled : props.disabled,
 		items : state.stations.items,
 		itemSelected : _.get( state.stations.items, state.stations.indexItemSelected ) ||  _.first( state.stations.items ),
 		route : _.first( state.routes.items )
