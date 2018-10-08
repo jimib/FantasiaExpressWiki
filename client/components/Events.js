@@ -7,9 +7,9 @@ import { ClassNames, getValueFromSources } from '@pixel-inspiration/react-libs/c
 import Styles from './css/Events.styl';
 
 import {MapEditorOverlayPointsComponent} from '@meyouandus/wikiskin';
+import {AXIS_LAT_LNG,closestPointOnBezierCurve, pointsToBezier} from '@meyouandus/wikiskin/src/utils/CurveUtil';
 import {Modal,Header,Button,Icon,Form} from 'semantic-ui-react';
 
-import {AXIS_LAT_LNG,closestPointOnBezierCurve, pointsToBezier} from '@meyouandus/wikiskin/src/utils/CurveUtil';
 
 class Events extends PixelComponent{
 	
@@ -50,13 +50,10 @@ class Events extends PixelComponent{
 		var {className,map,disabled,route,items,itemSelected,onItemSelect,onItemUnselect,onItemUpdate,onItemRemove,onItemCreate} = this.props;
 
 		const curve = disabled ? null : pointsToBezier( route.points, AXIS_LAT_LNG );
-		
 		const pntsOnRoute = curve ? _.map( items, item => {
 			return closestPointOnBezierCurve( curve, item, AXIS_LAT_LNG );
 		} ) : [];
 	
-		//console.log( pntsOnRoute, route.points );
-
 		return (<Fragment>
 			{<MapEditorOverlayPointsComponent map={map} disabled={disabled} color='blue' items={items} changeOnDrag={false} onChange={( item, items ) => {
 				onItemUpdate( item );

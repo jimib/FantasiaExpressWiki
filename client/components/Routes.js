@@ -7,18 +7,15 @@ import { hot } from 'react-hot-loader';
 import Styles from './css/Routes.styl';
 
 import {MapEditorOverlayPointsComponent,MapEditorLineCurveComponent} from '@meyouandus/wikiskin';
+import {AXIS_LAT_LNG,closestPointOnBezierCurve, pointsToBezier} from '@meyouandus/wikiskin/src/utils/CurveUtil';
 import {Modal,Header,Button,Icon,Form} from 'semantic-ui-react';
 
 class Routes extends PixelComponent{
 	
-	/**
-	 * @memberOf Routes
-	 * @constructs
-	 * @param {object} props 
-	 */
-	constructor(props){
-		super(props);
-		this.state = {
+	state = {
+		train : {
+			lat: 51.53860092163086,
+			lng: -0.14806696772575378
 		}
 	}
 
@@ -37,17 +34,31 @@ class Routes extends PixelComponent{
 	 * @returns {JSXElement}
 	 */
 	render(props){
-		var {className,map,disabled,itemSelected,onItemSelect,onItemUnselect,onItemUpdate,onItemRemove,onItemCreate} = this.props;
+		const {className,map,route,disabled,itemSelected,onItemSelect,onItemUnselect,onItemUpdate,onItemRemove,onItemCreate} = this.props;
+		const {train} = this.state;
+
 		const points = itemSelected ? itemSelected.points : null;
 
+		const curve = disabled || !itemSelected ? null : pointsToBezier( itemSelected.points, AXIS_LAT_LNG );
+		const trainOnRoute = curve ? closestPointOnBezierCurve( curve, train, AXIS_LAT_LNG ) : null;
+		
 		return (<Fragment>
 			{points && <MapEditorLineCurveComponent disabled={disabled} map={map} color='red' items={points} changeOnDrag={false} />}
 			{points && <MapEditorOverlayPointsComponent disabled={disabled} map={map} color='red' items={points} changeOnDrag={false} onChange={( point, points ) => {
 				const itemUpdate = _.assign({},itemSelected,{points});
-				console.log( itemUpdate.points[2], point );
 				onItemUpdate( itemUpdate );
 			}} onChangeComplete={() => {
-				console.log('onChangeComplete');
+				//update the train position
+				const trainOnRoute = curve ? closestPointOnBezierCurve( curve, this.state.train, AXIS_LAT_LNG ) : null;
+				this.setState({train:trainOnRoute})
+			}} />}
+
+			{!disabled && train && <MapEditorOverlayPointsComponent map={map} color='purple' items={[train]} itemSelected={train} onChange={(item) => {
+				this.setState({train:item})
+			}} onChangeComplete={(item) => {
+				//take the train position and pin it to the track
+				const trainOnRoute = curve ? closestPointOnBezierCurve( curve, this.state.train, AXIS_LAT_LNG ) : null;
+				this.setState({train:trainOnRoute});
 			}} />}
 		</Fragment>)
 	}
