@@ -12,6 +12,8 @@ import {Modal,Header,Button,Icon,Form} from 'semantic-ui-react';
 import { Style } from 'glamorous';
 import Compass from './Compass';
 
+const STEP_SIZE = 0.000005;
+
 class Routes extends PixelComponent{
 	
 	state = {
@@ -35,7 +37,7 @@ class Routes extends PixelComponent{
 				//update the train position - find it's current position on the curve
 				const curve = pointsToBezier( itemSelected.points, AXIS_LAT_LNG );
 				const svg = curveToSvgPath( curve );
-				const iDistance = distance + speed * 0.000005;
+				const iDistance = distance + speed * STEP_SIZE;
 				const pnt = svg.path.pointAt( iDistance );
 
 				//const position = getPointAtLengthOnBezierCurve( curve, distanceTravelled + speed * 0.00001 );
@@ -56,13 +58,37 @@ class Routes extends PixelComponent{
 			}
 		}, 10 );
 
-		//this.svg = this.svg || curveToSvgPath( curve, 'route' );
+		this.updateRoute();
+	}
+
+	componentWillReceiveProps = ( props ) => {
+		const a = props.itemSelected ? props.itemSelected.points : null;
+		const b = this.props.itemSelected ? this.props.itemSelected.points : null;
+		if( a != b ){
+			this.updateRoute( props );
+		}
 	}
 	
 	componentWillUnmount(){
 		this.props.onUnmount();
 		clearInterval( this.interval );
 		this.svg.remove();
+	}
+	
+	updateRoute = ( props = this.props ) => {
+		console.log('updateRoute');
+		if( this.svg ){
+			this.svg.remove();
+			this.svg = null;
+		}
+
+		const {itemSelected} = props;
+		
+		if( itemSelected ){
+			this.svg = curveToSvgPath( pointsToBezier( itemSelected.points, AXIS_LAT_LNG ), 'route' );
+		}
+		
+		this.updateTrainPosition();
 	}
 
 	onInputChange = ( evt ) => {
@@ -87,15 +113,26 @@ class Routes extends PixelComponent{
 	 * @returns {JSXElement}
 	 */
 	render(props){
-		const {className,map,route,disabled,itemSelected,onItemSelect,onItemUnselect,onItemUpdate,onItemRemove,onItemCreate} = this.props;
-		const {train,speed} = this.state;
+		const {className,map,disabled,itemSelected,onItemSelect,onItemUnselect,onItemUpdate,onItemRemove,onItemCreate} = this.props;
+		const {speed,distance} = this.state;
 
 		const points = itemSelected ? itemSelected.points : null;
 
-		const curve = disabled || !itemSelected ? null : pointsToBezier( itemSelected.points, AXIS_LAT_LNG );
-		const trainOnRoute = curve ? closestPointOnBezierCurve( curve, train, AXIS_LAT_LNG ) : null;
-
-		const rotation = 0;
+		let train = null;
+		let rotation = 0;
+		
+		if( this.svg ){
+			const dir = speed > 0 ? 1 : -1;
+			const a = this.svg.path.pointAt( Math.max( 0, distance - 10 * dir * STEP_SIZE ) );
+			const b = this.svg.path.pointAt( Math.max( 0, distance + 10 * dir * STEP_SIZE ) );
+			//console.log(a,b);
+			rotation = -(180 * Math.atan2(a.y - b.y,a.x - b.x) / Math.PI) - 90;
+			const t = this.svg.path.pointAt( distance );
+			train = {
+				[AXIS_LAT_LNG.xAxis] : t.x,
+				[AXIS_LAT_LNG.yAxis] : t.y
+			}
+		}
 		
 		return (<Fragment>
 			{!disabled && <div className={Styles.controls}>
@@ -122,7 +159,7 @@ class Routes extends PixelComponent{
 				this.updateTrainPosition();
 			}} />}
 
-			{train && <Compass className={Styles.compass} rotation={rotation} />}
+			{train && <Compass className={Styles.compass} direction={rotation} />}
 		</Fragment>)
 	}
 }

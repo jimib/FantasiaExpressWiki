@@ -45,7 +45,7 @@ class Compass extends PixelComponent{
 
 Compass.propTypes = {
 	className : PropTypes.string,
-	rotation : PropTypes.number
+	direction : PropTypes.number
 	//items : PropTypes.array.isRequired,
 	//onClick : PropTypes.func.isRequired
 }
