@@ -63,9 +63,9 @@
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@mapbox/whoots-js/-/whoots-js-3.1.0.tgz#497c67a1cef50d1a2459ba60f315e448d2ad87fe"
 
-"@meyouandus/wikiskin@jimib/FantasiaExpressWikiSkin#0.0.27":
-  version "0.0.27"
-  resolved "git+ssh://git@github.com/jimib/FantasiaExpressWikiSkin.git#a944139d73456e14896cbb6268a697b35e2cc452"
+"@meyouandus/wikiskin@jimib/FantasiaExpressWikiSkin#0.0.28":
+  version "0.0.28"
+  resolved "git+ssh://git@github.com/jimib/FantasiaExpressWikiSkin.git#78cb7d3452d3554e2996dc561c9876ae8fd202d0"
   dependencies:
     "@jimib/pa-tasks-react-skin" jimib/Personal-Assistant-Tasks-React-Skin#1.0.17
     "@pixel-inspiration/common-libs" "github:pixelinspiration/Pixel-Internal-Node-Libs#1.10.0"
@@ -81,9 +81,9 @@
     semantic-ui-react "^0.82.3"
     svg.js "^2.6.6"
 
-"@meyouandus/wikiskin@jimib/FantasiaExpressWikiSkin#0.0.28":
-  version "0.0.28"
-  resolved "git+ssh://git@github.com/jimib/FantasiaExpressWikiSkin.git#78cb7d3452d3554e2996dc561c9876ae8fd202d0"
+"@meyouandus/wikiskin@jimib/FantasiaExpressWikiSkin#0.0.29":
+  version "0.0.29"
+  resolved "git+ssh://git@github.com/jimib/FantasiaExpressWikiSkin.git#a8546c9f52986c786e730e886bfdb571d06c7e13"
   dependencies:
     "@jimib/pa-tasks-react-skin" jimib/Personal-Assistant-Tasks-React-Skin#1.0.17
     "@pixel-inspiration/common-libs" "github:pixelinspiration/Pixel-Internal-Node-Libs#1.10.0"

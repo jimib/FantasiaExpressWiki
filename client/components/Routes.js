@@ -1,14 +1,16 @@
 import React, {Component,Fragment} from 'react';
 import PropTypes from 'prop-types';
 import { PixelComponent } from '@pixel-inspiration/react-libs/components';
-import { ClassNames, getValueFromSources } from '@pixel-inspiration/react-libs/common';
+import { ClassNames, getValueFromSources, getInputEventChanges } from '@pixel-inspiration/react-libs/common';
 import { hot } from 'react-hot-loader';
 
 import Styles from './css/Routes.styl';
 
 import {MapEditorOverlayPointsComponent,MapEditorLineCurveComponent} from '@meyouandus/wikiskin';
-import {AXIS_LAT_LNG,closestPointOnBezierCurve, pointsToBezier} from '@meyouandus/wikiskin/src/utils/CurveUtil';
+import {AXIS_LAT_LNG,closestPointOnBezierCurve, pointsToBezier, getPointAtLengthOnBezierCurve, curveToSvgPath} from '@meyouandus/wikiskin/src/utils/CurveUtil';
 import {Modal,Header,Button,Icon,Form} from 'semantic-ui-react';
+import { Style } from 'glamorous';
+import Compass from './Compass';
 
 class Routes extends PixelComponent{
 	
@@ -16,16 +18,67 @@ class Routes extends PixelComponent{
 		train : {
 			lat: 51.53860092163086,
 			lng: -0.14806696772575378
-		}
+		},
+		distance : 0,
+		speed : 1
 	}
 
 	
 	componentDidMount(){
 		this.props.onMount();
+		this.interval = setInterval( () => {
+			//update the position based on the speed
+			const {speed,train,distance} = this.state;
+			const {itemSelected} = this.props;
+			if( speed != 0 && itemSelected ){
+		
+				//update the train position - find it's current position on the curve
+				const curve = pointsToBezier( itemSelected.points, AXIS_LAT_LNG );
+				const svg = curveToSvgPath( curve );
+				const iDistance = distance + speed * 0.000005;
+				const pnt = svg.path.pointAt( iDistance );
+
+				//const position = getPointAtLengthOnBezierCurve( curve, distanceTravelled + speed * 0.00001 );
+				//console.log( position, distanceTravelled, section,segment );
+				if( pnt ){
+					this.setState({
+						train : {
+							[AXIS_LAT_LNG.xAxis] : pnt.x,
+							[AXIS_LAT_LNG.yAxis] : pnt.y
+						},
+						distance : iDistance
+					});
+				}
+
+				svg.remove();
+				//from our speed we know
+
+			}
+		}, 10 );
+
+		//this.svg = this.svg || curveToSvgPath( curve, 'route' );
 	}
 	
 	componentWillUnmount(){
 		this.props.onUnmount();
+		clearInterval( this.interval );
+		this.svg.remove();
+	}
+
+	onInputChange = ( evt ) => {
+		this.setState( getInputEventChanges( evt ) );
+	}
+
+	updateTrainPosition = () => {
+		//take the train position and pin it to the track
+		const curve = pointsToBezier( this.props.itemSelected.points, AXIS_LAT_LNG );
+		const trainOnRoute = curve ? closestPointOnBezierCurve( curve, this.state.train, AXIS_LAT_LNG ) : null;
+
+		if( trainOnRoute ){
+			const {section,segment} = trainOnRoute;
+			const distance = section.pntA.distance + segment * section.pntB.length;
+			this.setState({train:trainOnRoute,distance});
+		}
 	}
 
 	/**
@@ -35,31 +88,41 @@ class Routes extends PixelComponent{
 	 */
 	render(props){
 		const {className,map,route,disabled,itemSelected,onItemSelect,onItemUnselect,onItemUpdate,onItemRemove,onItemCreate} = this.props;
-		const {train} = this.state;
+		const {train,speed} = this.state;
 
 		const points = itemSelected ? itemSelected.points : null;
 
 		const curve = disabled || !itemSelected ? null : pointsToBezier( itemSelected.points, AXIS_LAT_LNG );
 		const trainOnRoute = curve ? closestPointOnBezierCurve( curve, train, AXIS_LAT_LNG ) : null;
+
+		const rotation = 0;
 		
 		return (<Fragment>
+			{!disabled && <div className={Styles.controls}>
+				<div className={Styles.control}>
+					<label>{speed}</label>
+					<input type={'range'} name={'speed'} min={-100} max={100} step={10} data-type='number' value={speed} onChange={this.onInputChange} />
+					<button onClick={() => {
+						this.setState({speed:0});
+					}}>reset</button>
+				</div>
+			</div>}
 			{points && <MapEditorLineCurveComponent disabled={disabled} map={map} color='red' items={points} changeOnDrag={false} />}
 			{points && <MapEditorOverlayPointsComponent disabled={disabled} map={map} color='red' items={points} changeOnDrag={false} onChange={( point, points ) => {
 				const itemUpdate = _.assign({},itemSelected,{points});
 				onItemUpdate( itemUpdate );
 			}} onChangeComplete={() => {
 				//update the train position
-				const trainOnRoute = curve ? closestPointOnBezierCurve( curve, this.state.train, AXIS_LAT_LNG ) : null;
-				this.setState({train:trainOnRoute})
+				this.updateTrainPosition();
 			}} />}
 
 			{!disabled && train && <MapEditorOverlayPointsComponent map={map} color='purple' items={[train]} itemSelected={train} onChange={(item) => {
 				this.setState({train:item})
 			}} onChangeComplete={(item) => {
-				//take the train position and pin it to the track
-				const trainOnRoute = curve ? closestPointOnBezierCurve( curve, this.state.train, AXIS_LAT_LNG ) : null;
-				this.setState({train:trainOnRoute});
+				this.updateTrainPosition();
 			}} />}
+
+			{train && <Compass className={Styles.compass} rotation={rotation} />}
 		</Fragment>)
 	}
 }
