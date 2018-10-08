@@ -8,7 +8,8 @@ const mapStateToProps = (state, props) => {
 	return ({
 		disabled : props.disabled,
 		items : state.events.items,
-		itemSelected : _.get( state.events.items, state.events.indexItemSelected ) ||  _.first( state.events.items )
+		itemSelected : _.get( state.events.items, state.events.indexItemSelected ) ||  _.first( state.events.items ),
+		route : _.get( state.routes.items, state.routes.indexItemSelected ) || _.first( state.routes.items )
 	});
 }
 

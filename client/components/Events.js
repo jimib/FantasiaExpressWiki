@@ -1,5 +1,5 @@
 import { hot } from 'react-hot-loader';
-import React, {Component} from 'react';
+import React, {Component,Fragment} from 'react';
 import PropTypes from 'prop-types';
 import { PixelComponent } from '@pixel-inspiration/react-libs/components';
 import { ClassNames, getValueFromSources } from '@pixel-inspiration/react-libs/common';
@@ -8,6 +8,8 @@ import Styles from './css/Events.styl';
 
 import {MapEditorOverlayPointsComponent} from '@meyouandus/wikiskin';
 import {Modal,Header,Button,Icon,Form} from 'semantic-ui-react';
+
+import {AXIS_LAT_LNG,closestPointOnBezierCurve, pointsToBezier} from '@meyouandus/wikiskin/src/utils/CurveUtil';
 
 class Events extends PixelComponent{
 	
@@ -45,10 +47,24 @@ class Events extends PixelComponent{
 	 * @returns {JSXElement}
 	 */
 	render(props){
-		var {className,map,disabled,items,itemSelected,onItemSelect,onItemUnselect,onItemUpdate,onItemRemove,onItemCreate} = this.props;
-		return (<MapEditorOverlayPointsComponent map={map} disabled={disabled} color='blue' items={items} changeOnDrag={false} onChange={( item, items ) => {
-			onItemUpdate( item );
-		}} />)
+		var {className,map,disabled,route,items,itemSelected,onItemSelect,onItemUnselect,onItemUpdate,onItemRemove,onItemCreate} = this.props;
+
+		const curve = disabled ? null : pointsToBezier( route.points, AXIS_LAT_LNG );
+		
+		const pntsOnRoute = curve ? _.map( items, item => {
+			return closestPointOnBezierCurve( curve, item, AXIS_LAT_LNG );
+		} ) : [];
+	
+		//console.log( pntsOnRoute, route.points );
+
+		return (<Fragment>
+			{<MapEditorOverlayPointsComponent map={map} disabled={disabled} color='blue' items={items} changeOnDrag={false} onChange={( item, items ) => {
+				onItemUpdate( item );
+			}} /> }
+			{!disabled && <MapEditorOverlayPointsComponent map={map} disabled={true} color='blue' items={pntsOnRoute} onChange={() => {}} />}
+		</Fragment>
+		
+		)
 	}
 }
 

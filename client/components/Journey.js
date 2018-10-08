@@ -24,9 +24,9 @@ const MENU_ITEM_STATIONS = 'Stations';
 const MENU_ITEM_EVENTS = 'Events';
 const MENU_ITEM_ROUTE = 'Route';
 const MENU_ITEMS = [
+	MENU_ITEM_EVENTS,
 	MENU_ITEM_ROUTE,
 	MENU_ITEM_STATIONS,
-	MENU_ITEM_EVENTS,
 ]
 
 export default class Journey extends PixelComponent{
